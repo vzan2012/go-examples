@@ -41,7 +41,10 @@ func main() {
 	user.print()
 	user.updateName("vzan2012")
 	user.print()
-	experiment()
+	// experiment()
+
+	// Call Colors
+	callColors()
 
 }
 
