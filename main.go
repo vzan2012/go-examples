@@ -44,7 +44,12 @@ func main() {
 	// experiment()
 
 	// Call Colors
-	callColors()
+	// callColors()
+	englishUser := englishBot{}
+	spanishUser := spanishBot{}
+
+	printGreeting(englishUser)
+	printGreeting(spanishUser)
 
 }
 
