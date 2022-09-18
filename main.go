@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
 
 type contactInfo struct {
 	email   string
@@ -50,6 +55,23 @@ func main() {
 
 	printGreeting(englishUser)
 	printGreeting(spanishUser)
+
+	resp, err := http.Get("http://www.google.com")
+
+	if err != nil {
+		fmt.Errorf("Error : %v", err)
+		os.Exit(1)
+	}
+
+	// fmt.Printf("Response: %v", resp)
+	// fmt.Println(resp.Request)
+
+	// In real time, this is not possible to have a fixed length of byte array
+	// bs := make([]byte, 99999)
+	// resp.Body.Read(bs)
+	// fmt.Println(string(bs))
+
+	io.Copy(os.Stdout, resp.Body)
 
 }
 
