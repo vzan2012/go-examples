@@ -17,8 +17,9 @@ type person struct {
 	lastName  string
 	contactInfo
 }
+type logWriter struct{}
 
-type logWriter struct {}
+type logWriter struct{}
 
 func main() {
 	// 	user := person{firstName: "v", lastName: "zan2012"}
@@ -73,8 +74,9 @@ func main() {
 	// resp.Body.Read(bs)
 	// fmt.Println(string(bs))
 
-	// io.Copy(os.Stdout, resp.Body)
 	lw := logWriter{}
+	// io.Copy(os.Stdout, resp.Body)  Working one
+
 	io.Copy(lw, resp.Body)
 
 }
@@ -89,8 +91,8 @@ func (pointerToPerson *person) updateName(newFirstName string) {
 	(*pointerToPerson).firstName = newFirstName
 }
 
-func (logWriter) Write(bs []byte) (int,error) {
-	fmt.Println(string(bs));
-	fmt.Println("No of count: ", len(bs))
+func (logWriter) Write(bs []byte) (int, error) {
+	fmt.Println(string(bs))
+	fmt.Println("Number of count: ", len(bs))
 	return len(bs), nil
 }
