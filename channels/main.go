@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -24,10 +25,14 @@ func main() {
 		go linkChecker(link, c)
 	}
 
-	// Making an infinite loop
-	for {
-		// Call the link checker again 
-		go linkChecker(<-c, c)
+	// Making an for loop - range of channels (c)
+	for l := range c {
+		// Passing the link as an argument 
+		go func(link string) {
+			// Call the Link Checker every after 5 seconds 
+			time.Sleep(5 * time.Second)
+			linkChecker(link, c)
+		}(l)
 	}
 }
 
