@@ -13,16 +13,22 @@ func main() {
 		"http://bing.com",
 	}
 
+	c := make(chan string)
+
 	for _, link := range links {
-		linkChecker(link)
+		go linkChecker(link, c)
 	}
+
+	fmt.Println(<-c)
 }
 
-func linkChecker(link string) {
+func linkChecker(link string, c chan string) {
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "might be down !!!")
+		c <- "Site might be down !!!"
 		return
 	}
 	fmt.Println(link, "is up")
+	c <- "Site can be up !!!"
 }
