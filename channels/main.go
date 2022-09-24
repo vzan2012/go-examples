@@ -24,9 +24,10 @@ func main() {
 		go linkChecker(link, c)
 	}
 
-	// Looping the channel messages
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	// Making an infinite loop
+	for {
+		// Call the link checker again 
+		go linkChecker(<-c, c)
 	}
 }
 
@@ -35,9 +36,13 @@ func linkChecker(link string, c chan string) {
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "might be down !!!")
-		c <- "Site might be down !!!"
+
+		// Passing the link to the channel
+		c <- link
 		return
 	}
 	fmt.Println(link, "is up")
-	c <- "Site can be up !!!"
+	
+	// Passing the link to the channel
+	c <- link
 }
